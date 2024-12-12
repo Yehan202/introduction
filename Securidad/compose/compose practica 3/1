@@ -1,0 +1,145 @@
+services:
+
+  clientesalida:
+    image: yehan2002/ubuntu-ssh
+    hostname: clientesalida
+    privileged: true
+    entrypoint: ["sh", "-c","/usr/sbin/sshd -D"]
+    networks:
+      red_salida:
+        ipv4_address: 192.168.1.110  
+        # Dentro del rango de red_salida
+
+  clientedepartamento1:
+    image: yehan2002/ubuntu-ssh
+    hostname: clientedepartamento1
+    privileged: true
+    entrypoint: ["sh", "-c","/usr/sbin/sshd -D"]
+    networks:
+      red_departamento:
+        ipv4_address: 192.168.1.118  
+        # Dentro del rango de red_departamento
+
+  clientedepartamento2:
+    image: yehan2002/ubuntu-ssh
+    hostname: clientedepartamento2
+    privileged: true
+    entrypoint: ["sh", "-c","/usr/sbin/sshd -D"]
+    networks:
+      red_departamento:
+        ipv4_address: 192.168.1.119  
+        # Dentro del rango de red_departamento
+
+  clientejefe:
+    image: yehan2002/ubuntu-ssh
+    hostname: clientejefe
+    privileged: true
+    entrypoint: ["sh", "-c","/usr/sbin/sshd -D"]
+    networks:
+      red_jefe:
+        ipv4_address: 192.168.1.126  
+        # Dentro del rango de red_jefe
+
+  clientewifi:
+    image: yehan2002/ubuntu-ssh
+    hostname: clientewifi
+    privileged: true
+    entrypoint: ["sh", "-c","/usr/sbin/sshd -D"]
+    networks:
+      red_wifi:
+        ipv4_address: 192.168.1.134  
+        # Dentro del rango de red_wifi
+
+  routesalida:
+    image: yehan2002/ubuntu-ssh
+    hostname: routesalida
+    privileged: true
+    entrypoint: ["sh", "-c","/usr/sbin/sshd -D"]
+    networks:
+      red_internet:
+        ipv4_address: 192.168.1.102  
+        # Dentro del rango de red_internet
+      red_salida:
+        ipv4_address: 192.168.1.111  
+        # Dentro del rango de red_salida
+
+  routedepartamento:
+    image: yehan2002/ubuntu-ssh
+    hostname: routedepartamento
+    privileged: true
+    entrypoint: ["sh", "-c","/usr/sbin/sshd -D"]
+    networks:
+      red_salida:
+        ipv4_address: 192.168.1.112  
+        # Dentro del rango de red_salida
+      red_departamento:
+        ipv4_address: 192.168.1.120  
+        # Dentro del rango de red_departamento
+
+  routejefe:
+    image: yehan2002/ubuntu-ssh
+    hostname: routejefe
+    privileged: true
+    entrypoint: ["sh", "-c","/usr/sbin/sshd -D"]
+    networks:
+      red_salida:
+        ipv4_address: 192.168.1.113  
+        # Dentro del rango de red_salida
+      red_jefe:
+        ipv4_address: 192.168.1.127  
+        # Dentro del rango de red_jefe
+
+  routewifi:
+    image: yehan2002/ubuntu-ssh
+    hostname: routewifi
+    privileged: true
+    entrypoint: ["sh", "-c","/usr/sbin/sshd -D"]
+    networks:
+      red_salida:
+        ipv4_address: 192.168.1.114  
+        # Dentro del rango de red_salida
+      red_wifi:
+        ipv4_address: 192.168.1.135  
+        # Dentro del rango de red_wifi
+
+networks:
+  # Rango: 192.168.1.100 - 192.168.1.107  
+  red_internet:
+    name: red_internet
+    ipam:
+      config:
+        - subnet: "192.168.1.100/29"       
+          ip_range: "192.168.1.100/29"
+          gateway: "192.168.1.101"
+  # Rango: 192.168.1.108 - 192.168.1.115
+  red_salida:
+    name: red_salida
+    ipam:
+      config:
+        - subnet: "192.168.1.108/29"       
+          ip_range: "192.168.1.108/29"
+          gateway: "192.168.1.109"
+  # Rango: 192.168.1.116 - 192.168.1.123
+  red_departamento:
+    name: red_departamento
+    ipam:
+      config:
+        - subnet: "192.168.1.116/29"       
+          ip_range: "192.168.1.116/29"
+          gateway: "192.168.1.117"
+  # Rango: 192.168.1.124 - 192.168.1.131
+  red_jefe:
+    name: red_jefe
+    ipam:
+      config:
+        - subnet: "192.168.1.124/29"       
+          ip_range: "192.168.1.124/29"
+          gateway: "192.168.1.125"
+  # Rango: 192.168.1.132 - 192.168.1.139
+  red_wifi:
+    name: red_wifi
+    ipam:
+      config:
+        - subnet: "192.168.1.132/29"       
+          ip_range: "192.168.1.132/29"
+          gateway: "192.168.1.133"
